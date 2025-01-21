@@ -2,7 +2,7 @@ Flow org.gluu.agama.securitykey.main
      Basepath ""
 Log "@debug Main flow started!"
 loginForm = { success: true }
-casaApi = Call org.gluu.agama.securitykey.CasaApi#new
+casaApi = Call org.gluu.agama.securitykey.CasaApi#new 
 Repeat 3 times max
      creds = RRF "main.ftlh" loginForm
      userData = Call org.gluu.agama.securitykey.IdentityProcessor#accountFromUid creds.username
@@ -16,13 +16,14 @@ Repeat 3 times max
           count = mfaInfo.count
           Log "@debug User % has % credentials enrolled" inum count
           When count is 0
-               it_aagka = { success: false, error: "Your account has no security key configured." }
-               Finish it_aagka
+               it_iudmc = {success:false, error: "Your account has no security key configured."}
+               Finish it_iudmc
           withEscape = true
           fidoAuthn = Trigger org.gluu.agama.securitykey.fidoAuthn userData withEscape
           Log "@debug Response FidoAuthn %" fidoAuthn
           When fidoAuthn.success is true
-               Finish uid
+               it_ddrxg = {success:true, data: { userId: uid}}
+               Finish it_ddrxg
      loginForm.success = false
-it_sxdfm = { success: false, error: "Login attempt exceeded." }
-Finish it_sxdfm
+it_wbjne = {success:false, error: "Login attempt exceeded."}
+Finish it_wbjne
